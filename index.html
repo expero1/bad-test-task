@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Test Task</title>
+</head>
+
+<body>
+	<p>Enter Your text Here:</p>
+	<textarea name="input-text" id="input-text" class="input-text" cols="30" rows="10"></textarea>
+	<p>Resulting letter is:</p>
+	<div class="result" id="result"></div>
+</body>
+<script>
+	const textarea = document.querySelector("#input-text");
+	const result = document.querySelector("#result");
+	textarea.addEventListener("input", (event) => {
+		checkInputText(event.target.value);
+	});
+
+	function checkInputText(inputText) {
+		let firstUniqueLettersOfEachWord = "";
+		const words = inputText.replaceAll("\n", " ").split(" ");
+		words.forEach((word) => {
+			const uniqueLetter = getFirstUniqueLetter(word);
+			firstUniqueLettersOfEachWord += uniqueLetter;
+		});
+		result.innerText = getFirstUniqueLetter(firstUniqueLettersOfEachWord);
+	}
+
+	function getFirstUniqueLetter(word) {
+		const letterCounter = {};
+		for (let letterIndex = 0; letterIndex <= word.length - 1; letterIndex++) {
+			const currentLetter = word[letterIndex];
+			if (letterCounter[currentLetter]) letterCounter[currentLetter]++;
+			else letterCounter[currentLetter] = 1;
+		}
+		for (let letter in letterCounter) {
+			if (letterCounter[letter] === 1) return letter;
+		}
+		return "";
+	}
+
+</script>
+
+</html>
